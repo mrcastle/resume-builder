@@ -35,7 +35,7 @@ export const Resume = () => {
           onClick={async () => {
             if (window.confirm("This will be deleted")) {
               await deleteResumeMutation({ id: resume.id });
-              router.push(Routes.ResumesPage());
+              void router.push(Routes.ResumesPage());
             }
           }}
           style={{ marginLeft: "0.5rem" }}

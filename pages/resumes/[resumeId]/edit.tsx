@@ -1,14 +1,18 @@
 import { Suspense } from "react";
 import { Routes } from "@blitzjs/next";
-import Head from "next/head";
-import Link from "next/link";
+
+import getResume from "app/resumes/queries/getResume";
+import updateResume from "app/resumes/mutations/updateResume";
+
 import { useRouter } from "next/router";
 import { useQuery, useMutation } from "@blitzjs/rpc";
 import { useParam } from "@blitzjs/next";
 
+import Head from "next/head";
+import Link from "next/link";
+
 import Layout from "app/core/layouts/Layout";
-import getResume from "app/resumes/queries/getResume";
-import updateResume from "app/resumes/mutations/updateResume";
+
 import { ResumeForm, FORM_ERROR } from "app/resumes/components/ResumeForm";
 
 export const EditResume = () => {
@@ -48,7 +52,7 @@ export const EditResume = () => {
                 ...values,
               });
               await setQueryData(updated);
-              router.push(Routes.ShowResumePage({ resumeId: updated.id }));
+              void router.push(Routes.ShowResumePage({ resumeId: updated.id }));
             } catch (error: any) {
               console.error(error);
               return {

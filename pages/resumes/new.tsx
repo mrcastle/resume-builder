@@ -24,7 +24,7 @@ const NewResumePage = () => {
         onSubmit={async (values) => {
           try {
             const resume = await createResumeMutation(values);
-            router.push(Routes.ShowResumePage({ resumeId: resume.id }));
+            void router.push(Routes.ShowResumePage({ resumeId: resume.id }));
           } catch (error: any) {
             console.error(error);
             return {
