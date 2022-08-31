@@ -1,13 +1,13 @@
-import Layout from "app/core/layouts/Layout"
-import { LabeledTextField } from "app/core/components/LabeledTextField"
-import { Form, FORM_ERROR } from "app/core/components/Form"
-import { ForgotPassword } from "app/auth/validations"
-import forgotPassword from "app/auth/mutations/forgotPassword"
-import { useMutation } from "@blitzjs/rpc"
-import { BlitzPage } from "@blitzjs/next"
+import Layout from "app/core/layouts/Layout";
+import { LabeledTextField } from "app/core/components/LabeledTextField";
+import { Form, FORM_ERROR } from "app/core/components/Form";
+import { ForgotPassword } from "app/auth/validations";
+import forgotPassword from "app/auth/mutations/forgotPassword";
+import { useMutation } from "@blitzjs/rpc";
+import { BlitzPage } from "@blitzjs/next";
 
 const ForgotPasswordPage: BlitzPage = () => {
-  const [forgotPasswordMutation, { isSuccess }] = useMutation(forgotPassword)
+  const [forgotPasswordMutation, { isSuccess }] = useMutation(forgotPassword);
 
   return (
     <Layout title="Forgot Your Password?">
@@ -17,8 +17,8 @@ const ForgotPasswordPage: BlitzPage = () => {
         <div>
           <h2>Request Submitted</h2>
           <p>
-            If your email is in our system, you will receive instructions to reset your password
-            shortly.
+            If your email is in our system, you will receive instructions to
+            reset your password shortly.
           </p>
         </div>
       ) : (
@@ -28,11 +28,12 @@ const ForgotPasswordPage: BlitzPage = () => {
           initialValues={{ email: "" }}
           onSubmit={async (values) => {
             try {
-              await forgotPasswordMutation(values)
+              await forgotPasswordMutation(values);
             } catch (error: any) {
               return {
-                [FORM_ERROR]: "Sorry, we had an unexpected error. Please try again.",
-              }
+                [FORM_ERROR]:
+                  "Sorry, we had an unexpected error. Please try again.",
+              };
             }
           }}
         >
@@ -40,7 +41,7 @@ const ForgotPasswordPage: BlitzPage = () => {
         </Form>
       )}
     </Layout>
-  )
-}
+  );
+};
 
-export default ForgotPasswordPage
+export default ForgotPasswordPage;

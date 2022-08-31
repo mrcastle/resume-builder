@@ -8,6 +8,7 @@
     "studio": "blitz prisma studio",
     "lint": "eslint --ignore-path .gitignore --ext .js,.ts,.tsx .",
     "formatting-check": "prettier --check .",
+    "format": "prettier --write .",
     "type-check": "tsc",
     "test": "jest",
     "test:watch": "jest --watch",
