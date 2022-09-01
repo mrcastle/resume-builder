@@ -65,13 +65,13 @@ model Token {
 // }
 
 model Resume {
-  id                Int                 @id @default(autoincrement())
-  createdAt         DateTime            @default(now())
-  updatedAt         DateTime            @updatedAt
-  title             String
-  userDisplayName   String
-  summary           String?
-  TechnicalCategory TechnicalCategory[]
+  id                  Int                 @id @default(autoincrement())
+  createdAt           DateTime            @default(now())
+  updatedAt           DateTime            @updatedAt
+  title               String
+  userDisplayName     String
+  summary             String?
+  technicalCategories TechnicalCategory[]
 }
 
 model TechnicalCategory {
