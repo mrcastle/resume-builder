@@ -13,7 +13,10 @@ export default resolver.pipe(
   resolver.authorize(),
   async ({ id }) => {
     // TODO: in multi-tenant app, you must add validation to ensure correct tenant
-    const resume = await db.resume.findFirst({ where: { id } });
+    const resume = await db.resume.findFirst({
+      where: { id },
+      include: { technicalCategories: true },
+    });
 
     if (!resume) throw new NotFoundError();
 

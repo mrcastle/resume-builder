@@ -1,11 +1,6 @@
 import { resolver } from "@blitzjs/rpc";
 import db from "db";
-import { z } from "zod";
-
-const UpdateTechnicalCategory = z.object({
-  id: z.number(),
-  name: z.string(),
-});
+import { UpdateTechnicalCategory } from "../validations";
 
 export default resolver.pipe(
   resolver.zod(UpdateTechnicalCategory),
