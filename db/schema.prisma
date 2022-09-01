@@ -2,7 +2,7 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -63,3 +63,23 @@ model Token {
 // enum TokenType {
 //   RESET_PASSWORD
 // }
+
+model Resume {
+  id                  Int                 @id @default(autoincrement())
+  createdAt           DateTime            @default(now())
+  updatedAt           DateTime            @updatedAt
+  title               String
+  userDisplayName     String
+  summary             String?
+  technicalCategories TechnicalCategory[]
+}
+
+model TechnicalCategory {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String
+  skills    String[]
+  resume    Resume   @relation(fields: [resumeId], references: [id])
+  resumeId  Int
+}
