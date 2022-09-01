@@ -11,6 +11,8 @@ import { withBlitz } from "app/blitz-client";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 
+import "../styles/global.scss";
+
 const darkTheme = createTheme({
   palette: {
     mode: "dark",
