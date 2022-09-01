@@ -5,8 +5,17 @@ import {
   AppProps,
 } from "@blitzjs/next";
 import { AuthenticationError, AuthorizationError } from "blitz";
-import React from "react";
+
 import { withBlitz } from "app/blitz-client";
+
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+
+const darkTheme = createTheme({
+  palette: {
+    mode: "dark",
+  },
+});
 
 function RootErrorFallback({ error }: ErrorFallbackProps) {
   if (error instanceof AuthenticationError) {
@@ -30,9 +39,12 @@ function RootErrorFallback({ error }: ErrorFallbackProps) {
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <ErrorBoundary FallbackComponent={RootErrorFallback}>
-      <Component {...pageProps} />
-    </ErrorBoundary>
+    <ThemeProvider theme={darkTheme}>
+      <CssBaseline />
+      <ErrorBoundary FallbackComponent={RootErrorFallback}>
+        <Component {...pageProps} />
+      </ErrorBoundary>
+    </ThemeProvider>
   );
 }
 
