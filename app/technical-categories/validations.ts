@@ -6,7 +6,7 @@ export const TechnicalCategory = z.object({
 });
 
 export const UpdateTechnicalCategory = z.object({
-  id: z.number(),
+  id: z.number().optional(),
   name: z.string(),
   skills: z.array(z.string()),
 });
