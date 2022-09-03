@@ -1,0 +1,26 @@
+.Wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  //background-color: gray;
+
+  & > * + * {
+    margin-top: 1rem;
+  }
+  .SectionHeader {
+    margin-bottom: 10px;
+  }
+
+  .TechnicalSkills {
+    padding-top: 10px;
+    .Category {
+      &:not(:first-of-type) {
+        margin: 25px 0;
+      }
+
+      .Skills {
+        margin: 10px 0;
+      }
+    }
+  }
+}
