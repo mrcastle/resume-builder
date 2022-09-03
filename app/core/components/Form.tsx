@@ -3,6 +3,9 @@ import { Formik, FormikProps } from "formik";
 import { validateZodSchema } from "blitz";
 import { z } from "zod";
 
+import Button from "@mui/material/Button";
+
+import styles from "./Form.module.scss";
 export interface FormProps<S extends z.ZodType<any, any>>
   extends Omit<PropsWithoutRef<JSX.IntrinsicElements["form"]>, "onSubmit"> {
   /** All your form fields */
@@ -47,7 +50,7 @@ export function Form<S extends z.ZodType<any, any>>({
       }}
     >
       {({ handleSubmit, isSubmitting }) => (
-        <form onSubmit={handleSubmit} className="form" {...props}>
+        <form onSubmit={handleSubmit} className={styles.Form} {...props}>
           {/* Form fields supplied as children are rendered here */}
           {children}
 
@@ -58,16 +61,10 @@ export function Form<S extends z.ZodType<any, any>>({
           )}
 
           {submitText && (
-            <button type="submit" disabled={isSubmitting}>
+            <Button variant="contained" type="submit" disabled={isSubmitting}>
               {submitText}
-            </button>
+            </Button>
           )}
-
-          <style global jsx>{`
-            .form > * + * {
-              margin-top: 1rem;
-            }
-          `}</style>
         </form>
       )}
     </Formik>

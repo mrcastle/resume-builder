@@ -15,6 +15,8 @@ import Layout from "app/core/layouts/Layout";
 
 import { ResumeForm, FORM_ERROR } from "app/resumes/components/ResumeForm";
 
+import styles from "./edit.module.scss";
+
 export const EditResume = () => {
   const router = useRouter();
   const resumeId = useParam("resumeId", "number");
@@ -34,9 +36,9 @@ export const EditResume = () => {
         <title>Edit Resume {resume.id}</title>
       </Head>
 
-      <div>
+      <div className={styles.Wrapper}>
         <h1>Edit Resume {resume.id}</h1>
-        <pre>{JSON.stringify(resume, null, 2)}</pre>
+        {/* <pre>{JSON.stringify(resume, null, 2)}</pre> */}
 
         <ResumeForm
           submitText="Update Resume"
