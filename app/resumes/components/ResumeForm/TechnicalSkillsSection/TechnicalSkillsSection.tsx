@@ -1,5 +1,5 @@
 import { useField } from "formik";
-import { useState, ChangeEvent, useEffect } from "react";
+import { useState, ChangeEvent, useEffect, Suspense } from "react";
 import { z } from "zod";
 
 export { FORM_ERROR } from "app/core/components/Form";
@@ -10,11 +10,15 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import InputAdornment from "@mui/material/InputAdornment";
 import Paper from "@mui/material/Paper";
+import IconButton from "@mui/material/IconButton";
+import DeleteIcon from "@mui/icons-material/Delete";
+import Skeleton from "@mui/material/Skeleton";
+import Stack from "@mui/material/Stack";
 
 import { Form, FormProps } from "app/core/components/Form";
 import { LabeledTextField } from "app/core/components/LabeledTextField";
 
-import styles from "./ResumeForm.module.scss";
+import styles from "./TechnicalSkillsSection.module.scss";
 
 function TechnicalSkills({ skills, handleDeleteSkill, categoryIndex }) {
   return (
@@ -36,7 +40,7 @@ function TechnicalSkills({ skills, handleDeleteSkill, categoryIndex }) {
   );
 }
 
-function TechnicalCategoryFields({ index }) {
+function TechnicalCategoryFields({ index, handleDeleteCategory }) {
   const handleAddSkill = () => {
     const skillsToSet = skills ? [...skills, skillInput] : [skillInput];
     setValue(skillsToSet);
@@ -69,6 +73,10 @@ function TechnicalCategoryFields({ index }) {
         label="Category"
       />
 
+      <IconButton onClick={handleDeleteCategory} aria-label="delete">
+        <DeleteIcon />
+      </IconButton>
+
       <TechnicalSkills
         key={`technicalCategories.${index}.skills`}
         skills={skills}
@@ -93,39 +101,38 @@ function TechnicalCategoryFields({ index }) {
   );
 }
 
-export function ResumeForm<S extends z.ZodType<any, any>>(props: FormProps<S>) {
-  const [categories, setCategories] = useState(
-    props.initialValues?.technicalCategories ?? []
-  );
+export function TechnicalSkillsSection({}) {
+  const [_field, meta, helpers] = useField("technicalCategories");
+
+  const { value: categories } = meta;
+  const { setValue } = helpers;
 
   const handleAddCategory = () => {
-    setCategories([...categories, { name: "", skills: [] }]);
+    setValue([...categories, { name: "", skills: [] }]);
   };
-
   return (
-    <Form<S> {...props} className={styles.Wrapper}>
-      <LabeledTextField name="title" label="Title" placeholder="Title" />
-      <LabeledTextField
-        name="userDisplayName"
-        label="Full Name"
-        placeholder="Full Name"
-      />
-      <div className={styles.TechnicalSkills}>
-        <Typography className={styles.SectionHeader} variant="h6">
-          Technical Skills
-        </Typography>
-        {categories?.map((_, index) => {
-          return (
-            <TechnicalCategoryFields
-              key={`tech-category-${index}`}
-              index={index}
-            />
-          );
-        })}
-        <Button variant="contained" onClick={handleAddCategory}>
-          Add Technical Skill Category
-        </Button>
-      </div>
-    </Form>
+    <div className={styles.Wrapper}>
+      <Typography className={styles.SectionHeader} variant="h6">
+        Technical Skills
+      </Typography>
+      {categories?.map((_, index) => {
+        const handleDeleteCategory = () => {
+          setValue(categories.filter((_, idx) => idx !== index));
+        };
+
+        return (
+          <TechnicalCategoryFields
+            key={`tech-category-${index}`}
+            index={index}
+            handleDeleteCategory={handleDeleteCategory}
+          />
+        );
+      })}
+      <Button variant="contained" onClick={handleAddCategory}>
+        Add Technical Skill Category
+      </Button>
+    </div>
   );
 }
+
+export default TechnicalSkillsSection;
