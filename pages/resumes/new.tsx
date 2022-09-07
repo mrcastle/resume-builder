@@ -4,7 +4,10 @@ import { useRouter } from "next/router";
 import { useMutation } from "@blitzjs/rpc";
 import Layout from "app/core/layouts/Layout";
 import createResume from "app/resumes/mutations/createResume";
-import { ResumeForm, FORM_ERROR } from "app/resumes/components/ResumeForm";
+import {
+  ResumeForm,
+  FORM_ERROR,
+} from "app/resumes/components/ResumeForm/ResumeForm";
 
 const NewResumePage = () => {
   const router = useRouter();

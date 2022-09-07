@@ -13,7 +13,10 @@ import Link from "next/link";
 
 import Layout from "app/core/layouts/Layout";
 
-import { ResumeForm, FORM_ERROR } from "app/resumes/components/ResumeForm";
+import {
+  ResumeForm,
+  FORM_ERROR,
+} from "app/resumes/components/ResumeForm/ResumeForm";
 
 import styles from "./edit.module.scss";
 
