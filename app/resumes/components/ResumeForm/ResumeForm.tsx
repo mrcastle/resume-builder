@@ -1,25 +1,16 @@
 import { useField } from "formik";
-import { useState, ChangeEvent, useEffect, Suspense } from "react";
+import { useState } from "react";
 import { z } from "zod";
+import { EditorState, convertToRaw, convertFromRaw } from "draft-js";
+import dynamic from "next/dynamic";
 
 export { FORM_ERROR } from "app/core/components/Form";
 
-import Chip from "@mui/material/Chip";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
-import InputAdornment from "@mui/material/InputAdornment";
-import Paper from "@mui/material/Paper";
-import IconButton from "@mui/material/IconButton";
-import DeleteIcon from "@mui/icons-material/Delete";
 import Skeleton from "@mui/material/Skeleton";
 import Stack from "@mui/material/Stack";
-//import MUIRichTextEditor from "mui-rte";
 
 import { Form, FormProps } from "app/core/components/Form";
 import { LabeledTextField } from "app/core/components/LabeledTextField";
-
-import dynamic from "next/dynamic";
 
 const MUIRichTextEditorNoSSR = dynamic(() => import("mui-rte"), {
   loading: () => (
@@ -35,26 +26,46 @@ import "draft-js/dist/Draft.css";
 import styles from "./ResumeForm.module.scss";
 import TechnicalSkillsSection from "./TechnicalSkillsSection/TechnicalSkillsSection";
 
-function SummaryField({}) {
-  const [_field, meta, helpers] = useField("technicalCategories");
+function SummaryField() {
+  const [_field, meta, helpers] = useField("summary");
 
-  const { value } = meta;
+  const { initialValue } = meta;
   const { setValue } = helpers;
 
-  const [summary, setSummary] = useState();
+  const [_summary, setSummary] = useState(
+    initialValue
+      ? EditorState.createWithContent(convertFromRaw(JSON.parse(initialValue)))
+      : EditorState.createEmpty()
+  );
 
-  useEffect(() => {
-    console.log("summary", summary);
-  }, [summary]);
+  const handleChange = (editorState) => {
+    const content = editorState.getCurrentContent();
 
-  return <MUIRichTextEditorNoSSR label="Summary" />;
+    setValue(JSON.stringify(convertToRaw(content)));
+    setSummary(editorState);
+  };
+
+  const controls = [
+    "bold",
+    "italic",
+    "underline",
+    "strikethrough",
+    "link",
+    "numberList",
+    "bulletList",
+  ];
+
+  return (
+    <MUIRichTextEditorNoSSR
+      label="Summary"
+      defaultValue={initialValue ?? ""}
+      onChange={handleChange}
+      controls={controls}
+    />
+  );
 }
 
 export function ResumeForm<S extends z.ZodType<any, any>>(props: FormProps<S>) {
-  // const [categories, setCategories] = useState(
-  //   props.initialValues?.technicalCategories ?? []
-  // );
-
   return (
     <Form<S> {...props} className={styles.Wrapper}>
       <LabeledTextField name="title" label="Title" placeholder="Title" />

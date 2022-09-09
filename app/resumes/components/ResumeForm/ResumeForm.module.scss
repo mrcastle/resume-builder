@@ -13,17 +13,4 @@
   .Summary {
     background-color: gray;
   }
-
-  .TechnicalSkills {
-    padding-top: 10px;
-    .Category {
-      &:not(:first-of-type) {
-        margin: 25px 0;
-      }
-
-      .Skills {
-        margin: 10px 0;
-      }
-    }
-  }
 }
